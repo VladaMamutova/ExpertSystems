@@ -1,6 +1,6 @@
-﻿namespace DepthFirstSearch.Model
+﻿namespace GraphTraversal.Model
 {
-    public class Vertex
+    class Vertex: GraphItem
     {
         public enum States
         {
@@ -10,12 +10,15 @@
         }
 
         public States State { get; private set; }
-        public int Label { get; private set; }
-
-        public Vertex(int label)
+        
+        public Vertex(int label): base(label)
         {
             State = States.OPEN;
-            Label = label;
+        }
+
+        public void SetState(States state)
+        {
+            State = state;
         }
     }
 }

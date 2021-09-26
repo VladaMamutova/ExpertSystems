@@ -1,9 +1,19 @@
-﻿namespace DepthFirstSearch.Model
+﻿namespace GraphTraversal.Model
 {
-    public class Edge
+    class Edge: GraphItem
     {
-        public int Start { get; }
-        public int End { get; }
-        public int Label { get; }
+        public Vertex Start { get; }
+        public Vertex End { get; }
+
+        public Edge(int label, Vertex start, Vertex end): base(label)
+        {
+            Start = start;
+            End = end;
+        }
+
+        public override string ToString()
+        {
+            return $"{Start} ---{Label}--> {End}";
+        }
     }
 }

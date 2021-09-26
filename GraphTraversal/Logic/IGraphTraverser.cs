@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using DepthFirstSearch.Model;
+using GraphTraversal.Model;
 
 namespace GraphTraversal.Logic
 {
     interface IGraphTraverser
     {
-        IList<Vertex> Traverse();
+        IEnumerable<GraphItem> Traverse();
     }
 }

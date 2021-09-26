@@ -47,6 +47,7 @@
     <Compile Include="Logic\IGraphTraverser.cs" />
     <Compile Include="Model\Edge.cs" />
     <Compile Include="Model\Graph.cs" />
+    <Compile Include="Model\GraphItem.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
