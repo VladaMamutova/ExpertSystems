@@ -14,11 +14,18 @@ namespace GraphTraversal
                 Console.WriteLine("    Graph   ");
                 graph.Print();
 
-                var graphTraversal = new DepthFirstSearch(graph, 0, 3);
-                graphTraversal.DebugMode = true;
+                IGraphTraverser graphTraversal =
+                    new DepthFirstSearch(graph, 0, 8)
+                        {DebugMode = true};
 
                 graphTraversal.Traverse();
-                Console.WriteLine("\nDepth First Search");
+                graphTraversal.PrintTraversal();
+
+                graph = Graph.FromFile("graph.txt");
+                graphTraversal = new BreadthFirstSearch(graph, 0, 8)
+                    {DebugMode = true};
+
+                graphTraversal.Traverse();
                 graphTraversal.PrintTraversal();
             }
             catch (Exception ex)

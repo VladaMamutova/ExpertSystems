@@ -6,9 +6,9 @@ using GraphTraversal.Model;
 namespace GraphTraversal.Logic
 {
     /// <summary>
-    /// Depth-First Search
+    /// Breadth-First Search
     /// </summary>
-    class DepthFirstSearch: IGraphTraverser
+    class BreadthFirstSearch: IGraphTraverser
     {
         public Graph Graph { get; }
         public Vertex Source { get; private set; }
@@ -18,20 +18,28 @@ namespace GraphTraversal.Logic
 
         public bool DebugMode { get; set; }
 
-        public DepthFirstSearch(Graph graph)
+        public BreadthFirstSearch(Graph graph)
         {
             Graph = graph;
             Traversal = null;
             DebugMode = false;
         }
 
-        public DepthFirstSearch(Graph graph, int source, int target)
+        public BreadthFirstSearch(Graph graph, int source, int target)
         {
             Graph = graph;
             SetSource(source);
             SetTarget(target);
             Traversal = null;
             DebugMode = false;
+        }
+
+        private void PrintDebugLog(string message)
+        {
+            if (DebugMode)
+            {
+                Console.Write(message);
+            }
         }
 
         public GraphItem FindDescendant(GraphItem source)
@@ -47,15 +55,7 @@ namespace GraphTraversal.Logic
 
             return null;
         }
-
-        private void PrintDebugLog(string message)
-        {
-            if (DebugMode)
-            {
-                Console.Write(message);
-            }
-        }
-
+        
         public void SetSource(int label)
         {
             var vertex = Graph.FindVertex(label);
@@ -87,35 +87,48 @@ namespace GraphTraversal.Logic
                 throw new Exception("The source or target vertex is not defined");
             }
 
-            PrintDebugLog("\nDepth First Search Algorithm:\n");
+            PrintDebugLog("\nBreadth First Search Algorithm:\n");
 
             bool solved = false;
-            var opened = new Stack<Vertex>(Graph.Vertices.Count);
-            opened.Push(Source);
-
+            var opened = new Queue<Vertex>(Graph.Vertices.Count);
+            opened.Enqueue(Source);
+            var routes = new List<Stack<Vertex>>(Graph.Vertices.Count);
+            routes.Add(new Stack<Vertex>(new List<Vertex> {Source}));
+            
             do
             {
                 var head = opened.Peek();
-                head.SetState(Vertex.States.CLOSED);
-                PrintDebugLog(head.ToString());
+                if (head.State != Vertex.States.FORBIDDEN)
+                {
+                    head.SetState(Vertex.States.FORBIDDEN);
+                    PrintDebugLog($"| {head} | ");
+                }
 
                 var descendant = (Vertex)FindDescendant(head);
                 if (descendant == null)
                 {
-                    head = opened.Pop();
-                    head.SetState(Vertex.States.FORBIDDEN);
-                    PrintDebugLog(" <- ");
+                    opened.Dequeue();
+                    routes.RemoveAll(stack => stack.Peek().Equals(head));
                 }
                 else
                 {
-                    opened.Push(descendant);
+                    descendant.SetState(Vertex.States.CLOSED);
+                    opened.Enqueue(descendant);
+                    var route = routes.Find(stack => stack.Peek().Equals(head));
+                    routes.Add(new Stack<Vertex>(route.Reverse()));
+                    route.Push(descendant);
                     solved = descendant.Equals(Target);
-                    PrintDebugLog(" -> ");
+                    if (solved)
+                    {
+                        Traversal = route.Reverse().ToList();
+                        routes.RemoveAll(stack => stack.Peek().Equals(head));
+                    }
+                    PrintDebugLog($"-> {descendant} ");
                 }
             } while (opened.Count > 1 && !solved);
 
-            PrintDebugLog(solved ? $"{opened.Peek()} -> solved\n": " -> no solution\n");
-            Traversal = solved ? opened.Reverse().ToList() : null;
+            PrintDebugLog(solved ? "-> solved\n": "-> no solution\n");
+            
             return Traversal;
         }
         
@@ -126,7 +139,7 @@ namespace GraphTraversal.Logic
                 return;
             }
 
-            Console.WriteLine("\nDepth First Search");
+            Console.WriteLine("\nBreadth First Search");
             for (var i = 0; i < Traversal.Count - 1; i++)
             {
                 Console.Write($"{Traversal[i]} -> ");
