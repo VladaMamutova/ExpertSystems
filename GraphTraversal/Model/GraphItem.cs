@@ -2,14 +2,25 @@
 {
     abstract class GraphItem
     {
-        public int Label { get; }
-
-        protected GraphItem(int label)
+        public enum States
         {
-            Label = label;
+            OPEN = 0,
+            CLOSED = 1,
+            FORBIDDEN = -1
         }
 
-        //public abstract object Accept(INodeVisitor visitor);
+        public int Label { get; }
+        public States State { get; private set; }
+
+        protected GraphItem(int label, States state)
+        {
+            Label = label;
+            State = state;
+        }
+        public void SetState(States state)
+        {
+            State = state;
+        }
 
         public override bool Equals(object obj)
         {

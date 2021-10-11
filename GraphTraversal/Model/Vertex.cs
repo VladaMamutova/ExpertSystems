@@ -1,24 +1,10 @@
 ﻿namespace GraphTraversal.Model
 {
-    class Vertex: GraphItem
+    class Vertex : GraphItem
     {
-        public enum States
+        public Vertex(int label, States state = States.OPEN)
+            : base(label, state)
         {
-            OPEN = -1,
-            CLOSED = 0,
-            FORBIDDEN = 1
-        }
-
-        public States State { get; private set; }
-        
-        public Vertex(int label): base(label)
-        {
-            State = States.OPEN;
-        }
-
-        public void SetState(States state)
-        {
-            State = state;
         }
     }
 }

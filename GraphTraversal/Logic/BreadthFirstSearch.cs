@@ -47,8 +47,9 @@ namespace GraphTraversal.Logic
             foreach (var edge in Graph.Edges)
             {
                 if (edge.Start.Equals(source) &&
-                    edge.End.State == Vertex.States.OPEN)
+                    edge.State == GraphItem.States.OPEN)
                 {
+                    edge.SetState(GraphItem.States.CLOSED);
                     return edge.End;
                 }
             }
@@ -98,9 +99,9 @@ namespace GraphTraversal.Logic
             do
             {
                 var head = opened.Peek();
-                if (head.State != Vertex.States.FORBIDDEN)
+                if (head.State != GraphItem.States.CLOSED)
                 {
-                    head.SetState(Vertex.States.FORBIDDEN);
+                    head.SetState(GraphItem.States.CLOSED);
                     PrintDebugLog($"| {head} | ");
                 }
 
@@ -112,7 +113,6 @@ namespace GraphTraversal.Logic
                 }
                 else
                 {
-                    descendant.SetState(Vertex.States.CLOSED);
                     opened.Enqueue(descendant);
                     var route = routes.Find(stack => stack.Peek().Equals(head));
                     routes.Add(new Stack<Vertex>(route.Reverse()));

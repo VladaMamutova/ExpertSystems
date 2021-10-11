@@ -39,7 +39,7 @@ namespace GraphTraversal.Logic
             foreach (var edge in Graph.Edges)
             {
                 if (edge.Start.Equals(source) &&
-                    edge.End.State == Vertex.States.OPEN)
+                    edge.End.State == GraphItem.States.OPEN)
                 {
                     return edge.End;
                 }
@@ -96,14 +96,14 @@ namespace GraphTraversal.Logic
             do
             {
                 var head = opened.Peek();
-                head.SetState(Vertex.States.CLOSED);
+                head.SetState(GraphItem.States.CLOSED);
                 PrintDebugLog(head.ToString());
 
                 var descendant = (Vertex)FindDescendant(head);
                 if (descendant == null)
                 {
                     head = opened.Pop();
-                    head.SetState(Vertex.States.FORBIDDEN);
+                    head.SetState(GraphItem.States.FORBIDDEN);
                     PrintDebugLog(" <- ");
                 }
                 else

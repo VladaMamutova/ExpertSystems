@@ -1,7 +1,7 @@
-D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\obj\Debug\GraphTraversal.csproj.AssemblyReference.cache
-D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\obj\Debug\GraphTraversal.csproj.CoreCompileInputs.cache
 D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\bin\Debug\GraphTraversal.exe.config
 D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\bin\Debug\GraphTraversal.exe
 D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\bin\Debug\GraphTraversal.pdb
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\obj\Debug\GraphTraversal.csproj.AssemblyReference.cache
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\obj\Debug\GraphTraversal.csproj.CoreCompileInputs.cache
 D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\obj\Debug\GraphTraversal.exe
 D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\GraphTraversal\obj\Debug\GraphTraversal.pdb
