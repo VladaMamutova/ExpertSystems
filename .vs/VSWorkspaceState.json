@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\GraphTraversal",
+    "\\GraphTraversal\\bin",
+    "\\GraphTraversal\\bin\\Debug",
+    "\\GraphTraversal\\Helpers",
+    "\\GraphTraversal\\Logic",
+    "\\GraphTraversal\\Model"
   ],
   "PreviewInSolutionExplorer": false
 }
