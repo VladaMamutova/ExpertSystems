@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         FontSize="14"
-        WindowStartupLocation="CenterScreen"
-        Title="Обход в графах и-или" Height="450" Width="1000">
+        WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        Title="Обход в графах и-или" MinHeight="300" MinWidth="400">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

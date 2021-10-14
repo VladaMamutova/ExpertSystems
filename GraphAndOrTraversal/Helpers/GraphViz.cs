@@ -46,13 +46,17 @@ namespace GraphAndOrTraversal.Helpers
             var graph = Graph.Directed;
             foreach (var edge in graphEdges)
             {
+                graph = graph.Add(NodeStatement.For(new Id(edge.End.ToString()))
+                    .Set(new Id("shape"), new Id("circle")));
                 foreach (var start in edge.Start)
                 {
-                    graph = graph.Add(EdgeStatement.For(edge.End.Label.ToString(),
-                        start.Label.ToString()));
+                    graph = graph.Add(NodeStatement.For(new Id(start.ToString()))
+                        .Set(new Id("shape"), new Id("circle")));
+                    graph = graph.Add(EdgeStatement.For(edge.End.ToString(),
+                        start.Label.ToString()).Set(new Id("label"), new Id(edge.ToString())));
                 }
             }
-
+            
             return graph;
         }
 

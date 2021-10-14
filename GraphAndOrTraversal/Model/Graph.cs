@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace GraphAndOrTraversal.Model
@@ -19,8 +20,7 @@ namespace GraphAndOrTraversal.Model
 
         private Vertex FindOrCreateVertex(int label)
         {
-            var vertex = FindVertex(label);
-            if (vertex == null)
+            if (!TryFindVertex(label, out var vertex))
             {
                 vertex = new Vertex(label);
                 Vertices.Add(vertex.Label, vertex);
@@ -29,9 +29,19 @@ namespace GraphAndOrTraversal.Model
             return vertex;
         }
 
+        public bool TryFindVertex(int label, out Vertex vertex)
+        {
+            return Vertices.TryGetValue(label, out vertex);
+        }
+
         public Vertex FindVertex(int label)
         {
-            Vertices.TryGetValue(label, out var vertex);
+            if (!TryFindVertex(label, out var vertex))
+            {
+                throw new Exception(
+                    $"Vertex with label '{label}' not found in the graph");
+            }
+
             return vertex;
         }
 
@@ -47,12 +57,11 @@ namespace GraphAndOrTraversal.Model
             Edges.Add(new Edge(label, start.ToArray(), end));
         }
 
-        public void Print()
+        public string Print()
         {
-            foreach (var edge in Edges)
-            {
-                Console.WriteLine(edge);
-            }
+            var builder = new StringBuilder();
+            Edges.ForEach(edge => builder.Append(edge.Print()));
+            return builder.ToString();
         }
 
         public static Graph FromFile(string fileName)

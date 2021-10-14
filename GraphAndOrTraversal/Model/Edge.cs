@@ -14,7 +14,7 @@ namespace GraphAndOrTraversal.Model
             End = end;
         }
 
-        public override string ToString()
+        public string Print()
         {
             return $"{End} ---{Label}--> {{" +
                    string.Join(", ",
