@@ -45,16 +45,16 @@ namespace GraphAndOrTraversal.Model
             return vertex;
         }
 
-        public void AddEdge(int label, int[] source, int destination)
+        public void AddRule(int label, int[] inLabels, int outLabel)
         {
-            List<Vertex> start = new List<Vertex>();
-            foreach (var sourceLabel in source)
+            List<Vertex> inVertices = new List<Vertex>();
+            foreach (var inLabel in inLabels)
             {
-                start.Add(FindOrCreateVertex(sourceLabel));
+                inVertices.Add(FindOrCreateVertex(inLabel));
             }
-            var end = FindOrCreateVertex(destination);
+            var outVertex = FindOrCreateVertex(outLabel);
 
-            Edges.Add(new Edge(label, start.ToArray(), end));
+            Edges.Add(new Edge(label, inVertices.ToArray(), outVertex));
         }
 
         public string Print()
@@ -78,8 +78,8 @@ namespace GraphAndOrTraversal.Model
                 var inLabels = match.Groups[2].Value
                     .Split(new[] {", "}, StringSplitOptions.RemoveEmptyEntries)
                     .Select(int.Parse);
-                var edge = int.Parse(match.Groups[3].Value);
-                graph.AddEdge(edge, inLabels.ToArray(), outLabel);
+                var label = int.Parse(match.Groups[3].Value);
+                graph.AddRule(label, inLabels.ToArray(), outLabel);
             }
 
             return graph;

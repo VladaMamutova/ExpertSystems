@@ -43,16 +43,16 @@ namespace GraphAndOrTraversal.Helpers
 
         private Graph BuildGraph(List<Edge> graphEdges)
         {
-            var graph = Graph.Directed;
+            var graph = Graph.Undirected;
             foreach (var edge in graphEdges)
             {
-                graph = graph.Add(NodeStatement.For(new Id(edge.End.ToString()))
+                graph = graph.Add(NodeStatement.For(new Id(edge.Out.ToString()))
                     .Set(new Id("shape"), new Id("circle")));
-                foreach (var start in edge.Start)
+                foreach (var start in edge.In)
                 {
                     graph = graph.Add(NodeStatement.For(new Id(start.ToString()))
                         .Set(new Id("shape"), new Id("circle")));
-                    graph = graph.Add(EdgeStatement.For(edge.End.ToString(),
+                    graph = graph.Add(EdgeStatement.For(edge.Out.ToString(),
                         start.Label.ToString()).Set(new Id("label"), new Id(edge.ToString())));
                 }
             }

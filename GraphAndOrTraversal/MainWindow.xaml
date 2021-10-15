@@ -6,24 +6,44 @@
         mc:Ignorable="d"
         FontSize="14"
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        Title="Обход в графах и-или" MinHeight="300" MinWidth="400">
-    <Grid Margin="10">
+        Title="Обход в графах и/или" MinHeight="300" MinWidth="640">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2"/>
+            <RowDefinition Height="1"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Click="DepthFirstSearch_OnClick" Width="140" Height="40" Content="Обход в глубину"></Button>
-        <Grid Grid.Row="1" Height="2" VerticalAlignment="Bottom" Background="LightGray"></Grid>
+        <Grid Grid.Row="0" Margin="12 12 12 4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Column="0">
+                <Button Click="LoadGraph_OnClick" Padding="16 8 16 8" Margin="0 0 8 8" Content="Загрузить" Cursor="Hand"></Button>
+                <StackPanel Orientation="Horizontal" Margin="0 0 16 8">
+                    <Label Content="Исходные вершины:" VerticalAlignment="Center" Margin="0 0 4 0"></Label>
+                    <TextBox Name="SourceVertices" Width="128" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="8" LostFocus="SourceVertices_OnLostFocus"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+                    <Label Content="Цель:" VerticalAlignment="Center" Margin="0 0 4 0"/>
+                    <TextBox Name="TargetVertex" Width="48" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="8" LostFocus="TargetVertex_OnLostFocus"/>
+                </StackPanel>
+            </WrapPanel>
+            <WrapPanel Grid.Column="1" HorizontalAlignment="Right" Margin="8 0 0 0">
+                <Button Click="DepthFirstSearch_OnClick" Padding="16 8 16 8" Margin="0 0 8 0" Content="Поиск в глубину" Cursor="Hand"/>
+                <Button Padding="16 8 16 8" Content="Поиск в ширину" Cursor="Hand"></Button>
+            </WrapPanel>
+        </Grid>
+        <Grid Grid.Row="1" Height="1" VerticalAlignment="Bottom" Background="#FFF0F0F0"/>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" MinWidth="10" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" MinWidth="10" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Name="SourceGraph" HorizontalAlignment="Center" StretchDirection="Both" Stretch="None"></Image>
+            <Image Grid.Column="0" Name="SourceGraph" HorizontalAlignment="Stretch" Stretch="None" Cursor="Hand" ToolTip="Нажмите, чтобы скачать" MouseLeftButtonDown="SourceGraph_OnMouseLeftButtonDown"></Image>
             <GridSplitter Grid.Column="1" Width="4" VerticalAlignment="Stretch" HorizontalAlignment="Center"></GridSplitter>
-            <Image Grid.Column="1" Name="ResultGraph" HorizontalAlignment="Center"></Image>
+            <Image Grid.Column="2" Name="ResultGraph" HorizontalAlignment="Stretch" Stretch="None" Cursor="Hand" ToolTip="Нажмите, чтобы скачать" MouseLeftButtonDown="ResultGraph_OnMouseLeftButtonDown"></Image>
         </Grid>
     </Grid>
 </Window>

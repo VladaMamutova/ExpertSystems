@@ -4,21 +4,21 @@ namespace GraphAndOrTraversal.Model
 {
     class Edge: GraphItem
     {
-        public Vertex[] Start { get; }
-        public Vertex End { get; }
+        public Vertex[] In { get; }
+        public Vertex Out { get; }
 
-        public Edge(int label, Vertex[] start, Vertex end,
+        public Edge(int label, Vertex[] inVertices, Vertex outVertex,
             States state = States.OPEN) : base(label, state)
         {
-            Start = start;
-            End = end;
+            In = inVertices;
+            Out = outVertex;
         }
 
         public string Print()
         {
-            return $"{End} ---{Label}--> {{" +
+            return $"{Out} ---{Label}--> {{" +
                    string.Join(", ",
-                       Start.Select(vertex => vertex.ToString())) +
+                       In.Select(vertex => vertex.ToString())) +
                    "}";
         }
     }

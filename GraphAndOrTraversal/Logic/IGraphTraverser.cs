@@ -5,8 +5,8 @@ namespace GraphAndOrTraversal.Logic
 {
     interface IGraphTraverser
     {
-        GraphItem FindDescendant(GraphItem source);
-        void Markup();
+        GraphItem FindDescendant(GraphItem item);
+        bool Markup(GraphItem item);
         IEnumerable<GraphItem> Traverse();
     }
 }
