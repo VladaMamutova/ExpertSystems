@@ -3,10 +3,13 @@ using GraphAndOrTraversal.Model;
 
 namespace GraphAndOrTraversal.Logic
 {
+    /// <summary>
+    /// Интерфейс обхода графа (поиска в графе).
+    /// </summary>
     interface IGraphTraverser
     {
-        GraphItem FindDescendant(GraphItem item);
-        bool Markup(GraphItem item);
-        IEnumerable<GraphItem> Traverse();
+        GraphItem FindDescendant(GraphItem item); // метод потомков
+        bool Markup(GraphItem item); // метод разметки
+        IEnumerable<GraphItem> Traverse(); // метод поиска (обхода графа)
     }
 }

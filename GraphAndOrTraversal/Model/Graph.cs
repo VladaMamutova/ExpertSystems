@@ -7,10 +7,13 @@ using System.Text.RegularExpressions;
 
 namespace GraphAndOrTraversal.Model
 {
+    /// <summary>
+    /// Граф со списком вершин и правил.
+    /// </summary>
     class Graph
     {
-        public Dictionary<int, Vertex> Vertices { get; }
-        public List<Edge> Edges { get; }
+        public Dictionary<int, Vertex> Vertices { get; } // словарь вершин (ключ - номер вершины, значение - вершины)
+        public List<Edge> Edges { get; } // список правил
 
         public Graph()
         {

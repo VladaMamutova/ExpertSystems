@@ -61,7 +61,7 @@ namespace GraphAndOrTraversal
                 else
                 {
                     title = "Поиск в ширину";
-                    _graphTraverser = new BreadthFirstSearch(_graph,
+                    _graphTraverser = new BreadthFirstSearchV2(_graph,
                         _sourceVertices,
                         _targetVertex);
                 }

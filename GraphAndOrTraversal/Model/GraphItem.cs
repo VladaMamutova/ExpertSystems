@@ -1,16 +1,22 @@
 ﻿namespace GraphAndOrTraversal.Model
 {
+    /// <summary>
+    /// Элемент графа, содержит номер и метку (состояние).
+    /// </summary>
     abstract class GraphItem
     {
+        /// <summary>
+        /// Состояние элемента графа.
+        /// </summary>
         public enum States
         {
-            OPEN = 0,
-            CLOSED = 1,
-            FORBIDDEN = -1
+            OPEN = 0, // открыто
+            CLOSED = 1, // закрыто
+            FORBIDDEN = -1 // запрещено
         }
 
-        public int Label { get; }
-        public States State { get; private set; }
+        public int Label { get; } // номер
+        public States State { get; private set; } // состояние (далее - метка)
 
         protected GraphItem(int label, States state)
         {
