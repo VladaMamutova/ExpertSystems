@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using GraphAndOrTraversal.Helpers;
 using GraphAndOrTraversal.Logic;
@@ -32,40 +31,59 @@ namespace GraphAndOrTraversal
             _sourceVertices = new int[0];
         }
 
-        private async void DepthFirstSearch_OnClick(object sender,
-            RoutedEventArgs e)
+        private void DepthFirstSearch_OnClick(object sender, RoutedEventArgs e)
         {
-            if (ValidateData())
+            Search(true);
+        }
+
+        private void BreadthFirstSearch_OnClick(object sender, RoutedEventArgs e)
+        {
+            Search(false);
+        }
+
+        private async void Search(bool depthFirstSearch)
+        {
+            if (!ValidateData())
             {
-                try
+                return;
+            }
+
+            string title = "";
+            try
+            {
+                if (depthFirstSearch)
                 {
+                    title = "Поиск в глубину";
                     _graphTraverser = new DepthFirstSearch(_graph,
-                        _sourceVertices, _targetVertex);
-                    
-                    IEnumerable<GraphItem> traversal = _graphTraverser.Traverse();
-
-                    if (traversal == null)
-                    {
-                        MessageBox.Show(
-                            "Решение не найдено. Измените исходные данные " +
-                            "или целевую и повторите попытку.",
-                            "Поиск в глубину", MessageBoxButton.OK,
-                            MessageBoxImage.Information);
-                        ResultGraph.Source = null;
-                        return;
-                    }
-
-                    var graphEdges =
-                        traversal.Select(item => (Edge) item).ToList();
-
-                    await DisplayGraph(ResultGraph, graphEdges);
+                        _sourceVertices,
+                        _targetVertex);
                 }
-                catch (Exception exception)
+                else
                 {
-                    MessageBox.Show(exception.Message,
-                        "Поиск в глубину", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    title = "Поиск в ширину";
+                    _graphTraverser = new BreadthFirstSearch(_graph,
+                        _sourceVertices,
+                        _targetVertex);
                 }
+
+                IEnumerable<GraphItem> traversal = _graphTraverser.Traverse();
+
+                var graphEdges = _graph.Edges; //  traversal.Select(item => (Edge) item).ToList();
+                await DisplayGraph(ResultGraph, graphEdges);
+
+                if (traversal == null)
+                {
+                    MessageBox.Show(
+                        "Решение не найдено. Измените исходные данные " +
+                        "или целевую и повторите попытку.", title,
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, title,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -142,6 +160,22 @@ namespace GraphAndOrTraversal
             var filename = GetSaveFileName(GenerateDefaultFileName());
             SaveImage((BitmapImage)image.Source, filename);
         }
+        void SaveImage(BitmapImage bitmap, string filename)
+        {
+            if (filename == null)
+            {
+                return;
+            }
+
+            BitmapFrame frame = BitmapFrame.Create(bitmap);
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(frame);
+
+            using (var stream = File.Create(filename))
+            {
+                encoder.Save(stream);
+            }
+        }
 
         private string GetOpenFileName()
         {
@@ -164,45 +198,7 @@ namespace GraphAndOrTraversal
             };
             return saveFileDialog.ShowDialog() == true ? saveFileDialog.FileName : null;
         }
-
-        void SaveImage(BitmapImage bitmap, string filename)
-        {
-            if (filename == null)
-            {
-                return;
-            }
-
-            BitmapFrame frame = BitmapFrame.Create(bitmap);
-            BitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(frame);
-
-            using (var stream = File.Create(filename))
-            {
-                encoder.Save(stream);
-            }
-        }
-
-        void SaveUsingEncoder(FrameworkElement visual, string filename,
-            BitmapEncoder encoder)
-        {
-            if (filename == null)
-            {
-                return;
-            }
-
-            RenderTargetBitmap bitmap = new RenderTargetBitmap(
-                (int) visual.ActualWidth, (int) visual.ActualHeight, 96, 96,
-                PixelFormats.Pbgra32);
-            bitmap.Render(visual);
-            BitmapFrame frame = BitmapFrame.Create(bitmap);
-            encoder.Frames.Add(frame);
-
-            using (var stream = File.Create(filename))
-            {
-                encoder.Save(stream);
-            }
-        }
-
+        
         private int[] ExtractNumbers(string text)
         {
             string pattern = @"(\d+)";

@@ -30,8 +30,8 @@
                 </StackPanel>
             </WrapPanel>
             <WrapPanel Grid.Column="1" HorizontalAlignment="Right" Margin="8 0 0 0">
-                <Button Click="DepthFirstSearch_OnClick" Padding="16 8 16 8" Margin="0 0 8 0" Content="Поиск в глубину" Cursor="Hand"/>
-                <Button Padding="16 8 16 8" Content="Поиск в ширину" Cursor="Hand"></Button>
+                <Button Content="Поиск в глубину" Click="DepthFirstSearch_OnClick" Padding="16 8 16 8" Margin="0 0 8 0" Cursor="Hand"/>
+                <Button Content="Поиск в ширину" Click="BreadthFirstSearch_OnClick" Padding="16 8 16 8" Cursor="Hand"></Button>
             </WrapPanel>
         </Grid>
         <Grid Grid.Row="1" Height="1" VerticalAlignment="Bottom" Background="#FFF0F0F0"/>

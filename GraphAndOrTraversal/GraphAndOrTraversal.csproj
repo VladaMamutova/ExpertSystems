@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\GraphViz.cs" />
+    <Compile Include="Logic\BreadthFirstSearch.cs" />
     <Compile Include="Logic\DepthFirstSearch.cs" />
     <Compile Include="Logic\IGraphTraverser.cs" />
     <Compile Include="MainWindow.xaml.cs">
