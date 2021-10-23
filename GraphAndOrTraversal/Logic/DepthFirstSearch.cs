@@ -11,13 +11,9 @@ namespace GraphAndOrTraversal.Logic
     class DepthFirstSearch: IGraphTraverser
     {
         private readonly Stack<Vertex> _openedVertices;
-        private readonly Stack<Vertex> _closedVertices;
-        private readonly Stack<Vertex> _forbiddenVertices;
-
         private readonly Stack<Edge> _openedRules;
         private readonly Stack<Edge> _closedRules;
-        private readonly Stack<Edge> _forbiddenRules;
-
+        
         public Graph Graph { get; }
         public Vertex[] Source { get; private set; }
         public Vertex Target { get; private set; }
@@ -35,12 +31,8 @@ namespace GraphAndOrTraversal.Logic
             DebugMode = false;
 
             _openedVertices = new Stack<Vertex>();
-            _closedVertices = new Stack<Vertex>();
-            _forbiddenVertices = new Stack<Vertex>();
-
             _openedRules = new Stack<Edge>();
             _closedRules = new Stack<Edge>();
-            _forbiddenRules = new Stack<Edge>();
         }
 
         public DepthFirstSearch(Graph graph, int[] source, int target): this(graph)
@@ -66,12 +58,8 @@ namespace GraphAndOrTraversal.Logic
         private void Initialize()
         {
             _openedVertices.Clear();
-            _closedVertices.Clear();
-            _forbiddenVertices.Clear();
-
             _openedRules.Clear();
             _closedRules.Clear();
-            _forbiddenRules.Clear();
 
             Graph.Edges.ForEach(edge =>
             {
@@ -83,10 +71,9 @@ namespace GraphAndOrTraversal.Logic
                 edge.SetState(GraphItem.States.OPEN);
             });
 
-            foreach (var source in Source.Reverse())
+            foreach (var source in Source)
             {
                 source.SetState(GraphItem.States.CLOSED);
-                _closedVertices.Push(source);
             }
             _openedVertices.Push(Target);
         }
@@ -126,17 +113,15 @@ namespace GraphAndOrTraversal.Logic
         /// Метод разметки. Проверяет, являются ли все входные вершины правила доказанными.
         /// Все недоказанные входные вершины правила помещает в стек открытых вершин.
         /// </summary>
-        /// <param name="edge">Ребро графа (правило) для проверки.</param>
-        /// <returns>Признак, показывающий, являются ли
-        /// все входные вершины правила доказаны.</returns>
-        public bool Markup(GraphItem edge)
+        /// <param name="rule">Правило графа для проверки.</param>
+        /// <returns>true, если все входные вершины правила доказаны, false - иначе.</returns>
+        public bool Markup(GraphItem rule)
         {
             bool ruleIsProven = true;
 
-            var rule = (Edge)edge;
-            foreach (var inVertex in rule.In)
-            {
-                if (!_closedVertices.Contains(inVertex))
+            foreach (var inVertex in ((Edge)rule).In)
+            { 
+                if (inVertex.State != GraphItem.States.CLOSED)
                 {
                     ruleIsProven = false;
                     _openedVertices.Push(inVertex);
@@ -146,6 +131,10 @@ namespace GraphAndOrTraversal.Logic
             return ruleIsProven;
         }
 
+        /// <summary>
+        /// Метод поиска (обхода) в глубину.
+        /// </summary>
+        /// <returns>список доказанных правил, если решение найдено, null - иначе.</returns>
         public IEnumerable<GraphItem> Traverse()
         {
             bool solved = false;
@@ -159,14 +148,17 @@ namespace GraphAndOrTraversal.Logic
                 var rule = (Edge)FindDescendant(head);
                 if (rule == null)
                 {
+                    _openedVertices.Pop();
                     head.SetState(GraphItem.States.FORBIDDEN);
-                    _forbiddenVertices.Push(_openedVertices.Pop());
 
                     if (_openedRules.Count > 0)
                     {
                         rule = _openedRules.Pop();
-                        rule.SetState(GraphItem.States.FORBIDDEN);
-                        _forbiddenRules.Push(rule);
+                        if (rule.In.Any(inVertex =>
+                            inVertex.State == GraphItem.States.FORBIDDEN))
+                        {
+                            rule.SetState(GraphItem.States.FORBIDDEN);
+                        }
                         int openedInVertices = rule.In.Count(inVertex =>
                             inVertex.State == GraphItem.States.OPEN);
                         for (int i = 0; i < openedInVertices; i++)
@@ -177,18 +169,19 @@ namespace GraphAndOrTraversal.Logic
                 }
                 else
                 {
-                    _openedRules.Push(rule);
                     if (Markup(rule))
                     {
                         _openedVertices.Pop();
-                        _openedRules.Pop();
                         rule.Out.SetState(GraphItem.States.CLOSED);
-                        _closedVertices.Push(rule.Out);
 
                         rule.SetState(GraphItem.States.CLOSED);
                         _closedRules.Push(rule);
 
                         solved = rule.Out.Equals(Target);
+                    }
+                    else
+                    {
+                        _openedRules.Push(rule);
                     }
                 }
                 

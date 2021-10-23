@@ -47,17 +47,29 @@ namespace GraphAndOrTraversal.Helpers
             foreach (var edge in graphEdges)
             {
                 graph = graph.Add(NodeStatement.For(new Id(edge.Out.ToString()))
-                    .Set(new Id("shape"), new Id("circle")));
+                    .Set(new Id("shape"), new Id("circle")).Set("color", GetColor(edge.Out.State)));
                 foreach (var start in edge.In)
                 {
                     graph = graph.Add(NodeStatement.For(new Id(start.ToString()))
-                        .Set(new Id("shape"), new Id("circle")));
+                        .Set(new Id("shape"), new Id("circle")).Set("color", GetColor(start.State)));
                     graph = graph.Add(EdgeStatement.For(edge.Out.ToString(),
-                        start.Label.ToString()).Set(new Id("label"), new Id(edge.ToString())));
+                            start.Label.ToString())
+                        .Set(new Id("label"), new Id(edge.ToString()))
+                        .Set("color", GetColor(edge.State)));
                 }
             }
             
             return graph;
+        }
+
+        private string GetColor(GraphItem.States state)
+        {
+            switch (state)
+            {
+                case GraphItem.States.CLOSED: return "green";
+                case GraphItem.States.FORBIDDEN: return "red";
+                default: return "black";
+            }
         }
 
         public static async Task GenerateImage(List<Edge> graphEdges, Stream stream)
