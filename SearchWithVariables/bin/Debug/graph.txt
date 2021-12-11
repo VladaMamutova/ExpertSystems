@@ -1,0 +1,6 @@
+O(N, M1); M(M1); A(W); E(N, A1)
+C(W)
+1) A(x); W(y); S(x, y, z); H(z) -> C(x)
+2) M(x); O(N, x) -> S(W, x, N)
+3) M(x) -> W(x)
+4) E(x, A1) -> H(x)

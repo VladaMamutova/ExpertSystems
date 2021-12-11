@@ -1,0 +1,14 @@
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables.csproj.AssemblyReference.cache
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\MainWindow.g.cs
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\App.g.cs
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables_MarkupCompile.cache
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\bin\Debug\SearchWithVariables.exe.config
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\bin\Debug\SearchWithVariables.exe
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\bin\Debug\SearchWithVariables.pdb
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\MainWindow.baml
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables.g.resources
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables.Properties.Resources.resources
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables.csproj.GenerateResource.cache
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables.csproj.CoreCompileInputs.cache
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables.exe
+D:\ПИ\ПЭС - проектир. экспертных систем\ExpertSystems\SearchWithVariables\obj\Debug\SearchWithVariables.pdb
